@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Waves, Globe } from 'lucide-react';
+import { Menu, X, Waves, Globe, PenTool } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 
@@ -17,6 +17,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPath, onNavigate 
     { name: t.pla_kab, path: '/pla-kab', label: t.pla_kab_label },
     { name: t.pla_kador, path: '/pla-kador-ling', label: t.pla_kador_label },
     { name: t.pla_mor, path: '/pla-mor', label: t.pla_mor_label },
+    { name: t.custom, path: '/custom-order', label: t.custom_label },
   ];
 
   const handleNav = (path: string) => {
@@ -55,7 +56,8 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPath, onNavigate 
                   currentPath === link.path ? 'opacity-100' : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <span className={`font-serif text-lg ${currentPath === link.path ? 'text-indigo-deep' : 'text-gray-600'}`}>
+                <span className={`font-serif text-lg ${currentPath === link.path ? 'text-indigo-deep' : 'text-gray-600'} flex items-center gap-2`}>
+                  {link.path === '/custom-order' && <PenTool size={16} />}
                   {link.name}
                 </span>
                 <span className="text-[10px] uppercase tracking-widest text-gold-soft opacity-0 group-hover:opacity-100 transition-opacity">

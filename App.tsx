@@ -5,6 +5,7 @@ import { Landing } from './pages/Landing';
 import { PlaKab } from './pages/PlaKab';
 import { PlaKadorLing } from './pages/PlaKadorLing';
 import { PlaMor } from './pages/PlaMor';
+import { CustomOrder } from './pages/CustomOrder';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { translations } from './data/translations';
 
@@ -35,6 +36,7 @@ const Layout: React.FC = () => {
         <Route path="/pla-kab" element={<PlaKab />} />
         <Route path="/pla-kador-ling" element={<PlaKadorLing />} />
         <Route path="/pla-mor" element={<PlaMor />} />
+        <Route path="/custom-order" element={<CustomOrder />} />
       </Routes>
       
       {/* Global Footer */}

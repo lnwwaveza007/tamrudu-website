@@ -1,71 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tam Rudu | Wearable Story</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'paper': '#F9F7F2',
-              'indigo-deep': '#1A3C6B',
-              'mangrove': '#8B5A2B',
-              'gold-soft': '#C69C6D',
-            },
-            fontFamily: {
-              sans: ['Sarabun', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-              hand: ['Caveat', 'cursive'],
-            },
-            backgroundImage: {
-              'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
-            }
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tam Rudu | Wearable Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'paper': '#F9F7F2',
+            'indigo-deep': '#1A3C6B',
+            'mangrove': '#8B5A2B',
+            'gold-soft': '#C69C6D',
+          },
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            hand: ['Caveat', 'cursive'],
+          },
+          backgroundImage: {
+< !DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>Tam Rudu | Wearable Story</title>
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                  <link
+                    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap"
+                    rel="stylesheet">
+                    <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+                      tailwind.config = {
+                        theme: {
+                        extend: {
+                        colors: {
+                        'paper': '#F9F7F2',
+                      'indigo-deep': '#1A3C6B',
+                      'mangrove': '#8B5A2B',
+                      'gold-soft': '#C69C6D',
+          },
+                      fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                      serif: ['Playfair Display', 'serif'],
+                      hand: ['Caveat', 'cursive'],
+          },
+                      backgroundImage: {
+                        'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
           }
         }
       }
-    </script>
-    <style>
-      /* Custom scrollbar for a cleaner look */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #F9F7F2;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #C69C6D;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #8B5A2B;
-      }
-      .font-thai {
-        font-family: 'Sarabun', sans-serif;
-      }
-      .rotate-y-180 {
-        transform: rotateY(180deg);
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
-    "html2canvas": "https://aistudiocdn.com/html2canvas@^1.4.1"
-  }
-}
-</script>
+    }
+  </script>
+  <style>
+    /* Custom scrollbar for a cleaner look */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F9F7F2;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #C69C6D;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8B5A2B;
+    }
+
+    .font-thai {
+      font-family: 'Sarabun', sans-serif;
+    }
+
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+  </style>
 </head>
-  <body class="bg-paper text-gray-800 antialiased selection:bg-gold-soft selection:text-white">
-    <div id="root"></div>
-  </body>
+
+<body class="bg-paper text-gray-800 antialiased selection:bg-gold-soft selection:text-white">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

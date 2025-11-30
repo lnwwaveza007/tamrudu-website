@@ -3,6 +3,7 @@ import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, CheckCircle, Downloa
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import html2canvas from 'html2canvas';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Types
 interface FishOption {
@@ -30,9 +31,9 @@ interface DragState {
 }
 
 const FISH_OPTIONS: FishOption[] = [
-  { id: 'kab', img: '/images/kajub.jpg', name: 'Pla Kab' },
-  { id: 'kador', img: '/images/kadoorling.jpg', name: 'Pla Kador' },
-  { id: 'mor', img: '/images/pla-mor.jpg', name: 'Pla Mor' },
+  { id: 'kab', img: '/images/shirt/ka-jab.png', name: 'Pla Kab' },
+  { id: 'kador', img: '/images/shirt/kadoor.png', name: 'Pla Kador' },
+  { id: 'mor', img: '/images/shirt/pla-mor.png', name: 'Pla Mor' },
 ];
 
 const SHIRT_SIZES = ['S', 'M', 'L', 'XL'];
@@ -109,8 +110,9 @@ export const CustomOrder: React.FC = () => {
 
   // Handlers
   const handleAddFish = (fish: FishOption) => {
-    if (items.length >= MAX_ITEMS) {
-      alert(t.limit_reached);
+    const currentFishCount = items.filter(i => i.fishId === fish.id).length;
+    if (currentFishCount >= MAX_ITEMS) {
+      alert(`${t.limit_reached} (${fish.name})`);
       return;
     }
     const newItem: PlacedItem = {
@@ -226,42 +228,51 @@ export const CustomOrder: React.FC = () => {
 
         {/* Items Layer */}
         <div className="absolute inset-0 top-0 left-0 w-full h-full">
-          {sideItems.map((item) => {
-            const fishData = FISH_OPTIONS.find(f => f.id === item.fishId);
-            const isSelected = !isStaticExport && selectedItemId === item.id;
+          <AnimatePresence>
+            {sideItems.map((item) => {
+              const fishData = FISH_OPTIONS.find(f => f.id === item.fishId);
+              const isSelected = !isStaticExport && selectedItemId === item.id;
 
-            return (
-              <div
-                key={item.id}
-                onPointerDown={!isStaticExport ? (e) => handlePointerDown(e, item) : undefined}
-                className={`absolute w-[24%] md:w-[24%] transition-transform duration-75 ease-out ${!isStaticExport ? 'cursor-move touch-none' : ''}`}
-                style={{
-                  left: `${item.x}%`,
-                  top: `${item.y}%`,
-                  transform: `translate(-50%, -50%) rotate(${item.rotation}deg)`,
-                  zIndex: isSelected ? 50 : 10
-                }}
-              >
-                <div className={`relative ${isSelected ? 'p-2' : ''}`}>
-                  <img
-                    src={fishData?.img}
-                    alt="Fish"
-                    className={`w-full h-full object-contain drop-shadow-sm select-none pointer-events-none transition-all duration-300 ${shirtColor === 'black'
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  onPointerDown={!isStaticExport ? (e) => handlePointerDown(e, item) : undefined}
+                  className={`absolute w-[24%] md:w-[24%] transition-transform duration-75 ease-out ${!isStaticExport ? 'cursor-move touch-none' : ''}`}
+                  style={{
+                    left: `${item.x}%`,
+                    top: `${item.y}%`,
+                    transform: `translate(-50%, -50%) rotate(${item.rotation}deg)`,
+                    zIndex: isSelected ? 50 : 10
+                  }}
+                >
+                  <div className={`relative ${isSelected ? 'p-2' : ''}`}>
+                    <img
+                      src={fishData?.img}
+                      alt="Fish"
+                      className={`w-full h-full object-contain drop-shadow-sm select-none pointer-events-none transition-all duration-300 ${shirtColor === 'black'
                         ? 'filter invert mix-blend-screen'
                         : 'filter mix-blend-multiply'
-                      }`}
-                  />
-                  {isSelected && (
-                    <div className="absolute inset-0 border-2 border-dashed border-indigo-deep/50 rounded-lg animate-pulse pointer-events-none">
-                      <div className="absolute -top-3 -right-3 bg-indigo-deep text-white rounded-full p-1 shadow-sm">
-                        <CheckCircle size={12} />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                        }`}
+                    />
+                    {isSelected && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute inset-0 border-2 border-dashed border-indigo-deep/50 rounded-lg pointer-events-none"
+                      >
+                        <div className="absolute -top-3 -right-3 bg-indigo-deep text-white rounded-full p-1 shadow-sm">
+                          <CheckCircle size={12} />
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
 
         {/* Label for export */}
@@ -288,15 +299,25 @@ export const CustomOrder: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-6">
 
         {/* Header */}
-        <div className="text-center mb-8">
+        <motion.div
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <h1 className="font-thai text-4xl text-indigo-deep font-bold mb-2">{t.title}</h1>
           <p className="font-serif italic text-gray-500">{t.subtitle}</p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
 
           {/* LEFT: Controls (Fish Selection & Add) */}
-          <div className="lg:col-span-3 space-y-6 order-2 lg:order-1">
+          <motion.div
+            className="lg:col-span-3 space-y-6 order-2 lg:order-1"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-indigo-deep/10">
               <h3 className="font-thai text-lg font-bold text-indigo-deep mb-4 flex items-center gap-2">
                 <span className="bg-indigo-deep text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
@@ -304,30 +325,40 @@ export const CustomOrder: React.FC = () => {
               </h3>
 
               <div className="space-y-4">
-                {FISH_OPTIONS.map((fish) => (
-                  <button
-                    key={fish.id}
-                    onClick={() => handleAddFish(fish)}
-                    disabled={items.length >= MAX_ITEMS}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-indigo-deep hover:bg-indigo-50 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <div className="w-12 h-12 bg-white rounded-lg p-1 border border-gray-100">
-                      <img src={fish.img} alt={fish.name} className="w-full h-full object-contain" />
-                    </div>
-                    <div className="text-left flex-1">
-                      <span className="block font-serif font-bold text-gray-700 group-hover:text-indigo-deep">{fish.name}</span>
-                      <span className="text-xs text-gray-400 font-thai">{t.add_fish_btn}</span>
-                    </div>
-                    <Plus size={16} className="text-indigo-deep opacity-0 group-hover:opacity-100" />
-                  </button>
-                ))}
-                <p className="text-xs text-center text-gray-400 mt-2">{items.length}/{MAX_ITEMS} {t.limit_reached.replace('5', MAX_ITEMS.toString())}</p>
+                {FISH_OPTIONS.map((fish) => {
+                  const count = items.filter(i => i.fishId === fish.id).length;
+                  return (
+                    <motion.button
+                      key={fish.id}
+                      onClick={() => handleAddFish(fish)}
+                      disabled={count >= MAX_ITEMS}
+                      className="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-indigo-deep hover:bg-indigo-50 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="w-12 h-12 bg-white rounded-lg p-1 border border-gray-100">
+                        <img src={fish.img} alt={fish.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div className="text-left flex-1">
+                        <span className="block font-serif font-bold text-gray-700 group-hover:text-indigo-deep">{fish.name}</span>
+                        <span className="text-xs text-gray-400 font-thai">{t.add_fish_btn} ({count}/{MAX_ITEMS})</span>
+                      </div>
+                      <Plus size={16} className="text-indigo-deep opacity-0 group-hover:opacity-100" />
+                    </motion.button>
+                  );
+                })}
+                <p className="text-xs text-center text-gray-400 mt-2">{items.length} items total</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* CENTER: Interactive Canvas */}
-          <div className="lg:col-span-6 order-1 lg:order-2">
+          <motion.div
+            className="lg:col-span-6 order-1 lg:order-2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8 relative overflow-hidden border border-gray-100">
 
               {/* View Toggles */}
@@ -357,10 +388,15 @@ export const CustomOrder: React.FC = () => {
 
             {/* Mobile Hint */}
             <p className="text-center text-gray-400 text-sm mt-4 lg:hidden animate-pulse font-thai">{t.select_hint}</p>
-          </div>
+          </motion.div>
 
           {/* RIGHT: Manipulators */}
-          <div className="lg:col-span-3 space-y-6 order-3">
+          <motion.div
+            className="lg:col-span-3 space-y-6 order-3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
 
             {/* Step 2: Controls */}
             <div className={`bg-white p-6 rounded-2xl shadow-sm border border-indigo-deep/10 transition-opacity duration-300 ${!selectedItem ? 'opacity-50 pointer-events-none grayscale' : 'opacity-100'}`}>
@@ -369,13 +405,15 @@ export const CustomOrder: React.FC = () => {
                   <span className="bg-indigo-deep text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
                   {t.step_2}
                 </h3>
-                <button
+                <motion.button
                   onClick={handleDelete}
                   className="text-red-400 hover:text-red-600 p-1 hover:bg-red-50 rounded"
                   title={t.delete}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <Trash2 size={18} />
-                </button>
+                </motion.button>
               </div>
 
               {/* Presets */}
@@ -420,16 +458,17 @@ export const CustomOrder: React.FC = () => {
 
               <div className="flex gap-2 mb-6">
                 {SHIRT_SIZES.map((s) => (
-                  <button
+                  <motion.button
                     key={s}
                     onClick={() => setSize(s)}
                     className={`flex-1 h-10 rounded-lg font-serif text-sm border flex items-center justify-center transition-all ${size === s
-                        ? 'bg-indigo-deep text-white border-indigo-deep shadow-md'
-                        : 'bg-white text-gray-500 border-gray-200 hover:border-indigo-deep'
+                      ? 'bg-indigo-deep text-white border-indigo-deep shadow-md'
+                      : 'bg-white text-gray-500 border-gray-200 hover:border-indigo-deep'
                       }`}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {s}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
 
@@ -437,33 +476,37 @@ export const CustomOrder: React.FC = () => {
               <div className="mb-6">
                 <h4 className="font-thai text-sm text-gray-500 mb-2">Color / สี</h4>
                 <div className="flex gap-3">
-                  <button
+                  <motion.button
                     onClick={() => setShirtColor('white')}
                     className={`flex-1 py-2 rounded-lg border flex items-center justify-center gap-2 transition-all ${shirtColor === 'white'
-                        ? 'border-indigo-deep bg-indigo-50 text-indigo-deep ring-1 ring-indigo-deep'
-                        : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-indigo-deep bg-indigo-50 text-indigo-deep ring-1 ring-indigo-deep'
+                      : 'border-gray-200 hover:border-gray-300'
                       }`}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-4 h-4 rounded-full bg-white border border-gray-300"></div>
                     <span className="font-serif text-sm">White</span>
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
                     onClick={() => setShirtColor('black')}
                     className={`flex-1 py-2 rounded-lg border flex items-center justify-center gap-2 transition-all ${shirtColor === 'black'
-                        ? 'border-gray-900 bg-gray-900 text-white ring-1 ring-gray-900'
-                        : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-gray-900 bg-gray-900 text-white ring-1 ring-gray-900'
+                      : 'border-gray-200 hover:border-gray-300'
                       }`}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-4 h-4 rounded-full bg-black border border-gray-600"></div>
                     <span className="font-serif text-sm">Black</span>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
 
-              <button
+              <motion.button
                 onClick={handleSaveImage}
                 disabled={isProcessing}
-                className="w-full py-4 bg-gold-soft text-indigo-deep font-thai font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-wait"
+                className="w-full py-4 bg-gold-soft text-indigo-deep font-thai font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-wait"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {isProcessing ? (
                   <span className="animate-pulse text-sm">{t.downloading}</span>
@@ -472,10 +515,10 @@ export const CustomOrder: React.FC = () => {
                     <Download size={20} /> {t.add_to_cart}
                   </>
                 )}
-              </button>
+              </motion.button>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 
@@ -501,8 +544,10 @@ export const CustomOrder: React.FC = () => {
             </div>
 
             {/* Footer Info in Image */}
-            <div className="absolute bottom-4 left-0 w-full text-center text-gray-400 font-serif text-sm">
-              ORDER TICKET: {new Date().toLocaleDateString()} | SIZE: {size} | COLOR: {shirtColor.toUpperCase()} | TAM RUDU
+            <div className="absolute bottom-4 left-0 w-full text-center text-gray-400 font-serif text-sm flex items-center justify-center gap-2">
+              <span>ORDER TICKET: {new Date().toLocaleDateString()} |</span>
+              <span className="text-black font-bold text-2xl">SIZE: {size}</span>
+              <span>| COLOR: {shirtColor.toUpperCase()} | TAM RUDU</span>
             </div>
           </div>
         </div>

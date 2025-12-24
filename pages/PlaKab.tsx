@@ -172,17 +172,18 @@ export const PlaKab: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. CTA */}
-      <div className="text-center py-12">
+      {/* 3. Back to Home */}
+      <div className="w-full text-center py-12 flex flex-col items-center">
         <Reveal direction="up" delay={0.2}>
-          <motion.button
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-serif text-lg text-white transition-all duration-200 bg-indigo-deep rounded-full hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-deep shadow-xl"
-            whileHover={{ scale: 1.05, y: -5 }}
+          <motion.a
+            href="#/"
+            className="group relative inline-flex items-center justify-center px-10 py-3 font-serif text-lg text-indigo-deep border transition-all duration-200 border-indigo-deep rounded-full hover:bg-indigo-deep hover:text-white"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="mr-2">{t.cta}</span>
+            <span className="mr-2">{translations[language].nav.back_home}</span>
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </motion.button>
+          </motion.a>
         </Reveal>
       </div>
 

@@ -12,6 +12,7 @@ export const translations = {
       custom_label: 'ออกแบบเอง',
       menu_open: 'เมนู',
       menu_close: 'ปิด',
+      back_home: 'กลับสู่หน้าหลัก',
     },
     landing: {
       sub_hero: 'การเล่าเรื่องแบบฟื้นฟู',
@@ -23,6 +24,11 @@ export const translations = {
       val_2_desc: 'งานดีไซน์ที่ได้แรงบันดาลใจจากความหลากหลายทางชีวภาพ ที่ซึ่งน้ำจืด น้ำเค็ม และน้ำกร่อยมาบรรจบกัน',
       val_3_title: 'ภูมิปัญญาท้องถิ่น',
       val_3_desc: 'ฟื้นคืนชีวิตให้ปลาท้องถิ่นที่ถูกลืม ผ่านแฟชั่นสกรีนมือร่วมสมัย',
+      line_title: 'เข้าร่วมคอมมูนิตี้ของเรา',
+      line_desc: 'ติดต่อเราผ่าน LINE Official Account เพื่อรับข่าวสารสุดพิเศษและการดูแลอย่างใกล้ชิด',
+      line_button: 'แชทกับเราใน LINE',
+      fb_title: 'อัปเดตล่าสุด',
+      fb_desc: 'ติดตามข่าวสารและกิจกรรมล่าสุดของเราได้ที่ Facebook',
     },
     plakab: {
       rhythm: 'จังหวะแห่งสายน้ำ',
@@ -112,6 +118,7 @@ export const translations = {
       custom_label: 'Design Own',
       menu_open: 'Menu',
       menu_close: 'Close',
+      back_home: 'Back to Home',
     },
     landing: {
       sub_hero: 'Regenerative Storytelling',
@@ -123,6 +130,11 @@ export const translations = {
       val_2_desc: 'Designs inspired by the unique biodiversity where fresh, salt, and brackish waters meet.',
       val_3_title: 'Local Wisdom',
       val_3_desc: 'Reviving forgotten local fish species through contemporary hand-screened fashion.',
+      line_title: 'Join Our Community',
+      line_desc: 'Get in touch with us through LINE Official Account for exclusive updates and personalized support.',
+      line_button: 'Chat with us on LINE',
+      fb_title: 'Latest Updates',
+      fb_desc: 'Follow us on Facebook for the latest news and updates',
     },
     plakab: {
       rhythm: 'The Rhythm of Tides',

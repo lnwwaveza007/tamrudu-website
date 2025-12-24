@@ -129,7 +129,7 @@ export const CustomOrder: React.FC = () => {
 
   const handleUpdateItem = (updates: Partial<PlacedItem>) => {
     if (selectedItemId === null) return;
-    setItems(items.map(item =>
+    setItems(prevItems => prevItems.map(item =>
       item.id === selectedItemId ? { ...item, ...updates } : item
     ));
   };
@@ -143,8 +143,14 @@ export const CustomOrder: React.FC = () => {
   };
 
   const handleRotate = (deg: number) => {
-    if (!selectedItem) return;
-    handleUpdateItem({ rotation: selectedItem.rotation + deg });
+    if (selectedItemId === null) return;
+    setItems(prevItems => prevItems.map(item => {
+      if (item.id === selectedItemId) {
+        const newRotation = ((item.rotation + deg) % 360 + 360) % 360;
+        return { ...item, rotation: newRotation };
+      }
+      return item;
+    }));
   };
 
   const handleDelete = () => {
@@ -237,14 +243,19 @@ export const CustomOrder: React.FC = () => {
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  onPointerDown={!isStaticExport ? (e) => handlePointerDown(e, item) : undefined}
-                  className={`absolute w-[24%] md:w-[24%] transition-transform duration-75 ease-out ${!isStaticExport ? 'cursor-move touch-none' : ''}`}
-                  style={{
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
                     left: `${item.x}%`,
                     top: `${item.y}%`,
-                    transform: `translate(-50%, -50%) rotate(${item.rotation}deg)`,
+                    rotate: item.rotation
+                  }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  onPointerDown={!isStaticExport ? (e) => handlePointerDown(e, item) : undefined}
+                  className={`absolute w-[24%] md:w-[24%] ${!isStaticExport ? 'cursor-move touch-none' : ''}`}
+                  style={{
+                    x: '-50%',
+                    y: '-50%',
                     zIndex: isSelected ? 50 : 10
                   }}
                 >

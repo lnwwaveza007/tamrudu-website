@@ -157,17 +157,18 @@ export const PlaKadorLing: React.FC = () => {
         </Reveal>
       </section >
 
-      {/* 3. CTA */}
-      <div className="text-center py-16">
+      {/* 3. Back to Home */}
+      <div className="w-full text-center py-16 flex flex-col items-center">
         <Reveal direction="up" delay={0.2}>
-          <motion.button
-            className="group relative inline-flex items-center justify-center px-12 py-4 font-serif text-lg text-white transition-all duration-200 bg-mangrove rounded-sm shadow-xl hover:bg-[#6d4520]"
-            whileHover={{ scale: 1.05, y: -5 }}
+          <motion.a
+            href="#/"
+            className="group relative inline-flex items-center justify-center px-10 py-3 font-serif text-lg text-indigo-deep border transition-all duration-200 border-indigo-deep rounded-sm hover:bg-indigo-deep hover:text-white"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="mr-3">{t.cta}</span>
-            <Info className="w-5 h-5 opacity-70 group-hover:opacity-100" />
-          </motion.button>
+            <span className="mr-3">{translations[language].nav.back_home}</span>
+            <Anchor className="w-5 h-5 opacity-70 group-hover:opacity-100" />
+          </motion.a>
         </Reveal>
       </div >
 

@@ -141,17 +141,18 @@ export const PlaMor: React.FC = () => {
           </Reveal>
         </section >
 
-        {/* 3. CTA */}
-        <div className="text-center py-16">
+        {/* 3. Back to Home */}
+        <div className="w-full text-center py-16 flex flex-col items-center">
           <Reveal delay={0.2} direction="up">
-            <motion.button
-              className="group relative inline-flex items-center justify-center px-12 py-5 font-serif text-xl text-indigo-deep transition-all duration-200 bg-gold-soft rounded-full shadow-xl hover:bg-white hover:text-indigo-deep"
-              whileHover={{ scale: 1.05, y: -5 }}
+            <motion.a
+              href="#/"
+              className="group relative inline-flex items-center justify-center px-10 py-3 font-serif text-lg text-indigo-deep border transition-all duration-200 border-indigo-deep rounded-full hover:bg-indigo-deep hover:text-white"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="mr-3">{t.cta}</span>
+              <span className="mr-3">{translations[language].nav.back_home}</span>
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            </motion.a>
           </Reveal>
         </div >
 

@@ -15,9 +15,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPath, onNavigate 
   const t = translations[language].nav;
 
   const links = [
-    { name: t.pla_kab, path: '/pla-kab', label: t.pla_kab_label },
-    { name: t.pla_kador, path: '/pla-kador-ling', label: t.pla_kador_label },
-    { name: t.pla_mor, path: '/pla-mor', label: t.pla_mor_label },
+    { name: t.products, path: '/products', label: t.products_label },
     { name: t.custom, path: '/custom-order', label: t.custom_label },
   ];
 
@@ -46,7 +44,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPath, onNavigate 
               animate={{ rotate: [0, 5, 0, -5, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Waves className="h-8 w-8 text-indigo-deep group-hover:text-gold-soft transition-colors duration-300" />
+              <img src="/images/logo.png" alt="Logo" width={50} height={50} />
             </motion.div>
             <div className="ml-3 flex flex-col">
               <span className="font-serif text-xl font-bold text-indigo-deep tracking-wider">TAM RUDU</span>

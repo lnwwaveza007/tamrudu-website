@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Leaf, Droplets, Waves, ChevronDown } from 'lucide-react';
+import { ArrowRight, Heart, Star, Users, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { motion } from 'framer-motion';
@@ -65,7 +65,7 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.button
-              onClick={() => onNavigate('/pla-kab')}
+              onClick={() => onNavigate('/products')}
               className="group relative px-10 py-4 bg-indigo-deep text-paper overflow-hidden rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -94,16 +94,16 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <Reveal delay={0.1}>
-              <h2 className="font-serif text-3xl md:text-4xl text-indigo-deep mb-4">Our Values</h2>
+              <h2 className="font-serif text-3xl md:text-4xl text-indigo-deep mb-4">{t.values_title}</h2>
               <div className="h-1 w-20 bg-gold-soft mx-auto rounded-full" />
             </Reveal>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {[
-              { icon: Leaf, title: t.val_1_title, desc: t.val_1_desc, color: 'text-mangrove', delay: 0.2 },
-              { icon: Droplets, title: t.val_2_title, desc: t.val_2_desc, color: 'text-indigo-deep', delay: 0.3 },
-              { icon: Waves, title: t.val_3_title, desc: t.val_3_desc, color: 'text-gold-soft', delay: 0.4 }
+              { icon: Heart, title: t.val_1_title, desc: t.val_1_desc, color: 'text-rose-500', delay: 0.2 },
+              { icon: Users, title: t.val_2_title, desc: t.val_2_desc, color: 'text-indigo-deep', delay: 0.3 },
+              { icon: Star, title: t.val_3_title, desc: t.val_3_desc, color: 'text-gold-soft', delay: 0.4 }
             ].map((item, idx) => (
               <Reveal key={idx} delay={item.delay} direction="up">
                 <motion.div

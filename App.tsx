@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Landing } from './pages/Landing';
-import { PlaKab } from './pages/PlaKab';
-import { PlaKadorLing } from './pages/PlaKadorLing';
-import { PlaMor } from './pages/PlaMor';
+import { FishCollection } from './pages/FishCollection';
 import { CustomOrder } from './pages/CustomOrder';
+import { Products } from './pages/Products';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { translations } from './data/translations';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -55,24 +54,23 @@ const Layout: React.FC = () => {
               <Landing onNavigate={(path) => navigate(path)} />
             </PageTransition>
           } />
-          <Route path="/pla-kab" element={
+          <Route path="/fish-collection" element={
             <PageTransition>
-              <PlaKab />
+              <FishCollection />
             </PageTransition>
           } />
-          <Route path="/pla-kador-ling" element={
-            <PageTransition>
-              <PlaKadorLing />
-            </PageTransition>
-          } />
-          <Route path="/pla-mor" element={
-            <PageTransition>
-              <PlaMor />
-            </PageTransition>
-          } />
+          {/* Legacy fish routes — redirect to combined page */}
+          <Route path="/pla-kab" element={<PageTransition><FishCollection /></PageTransition>} />
+          <Route path="/pla-kador-ling" element={<PageTransition><FishCollection /></PageTransition>} />
+          <Route path="/pla-mor" element={<PageTransition><FishCollection /></PageTransition>} />
           <Route path="/custom-order" element={
             <PageTransition>
               <CustomOrder />
+            </PageTransition>
+          } />
+          <Route path="/products" element={
+            <PageTransition>
+              <Products />
             </PageTransition>
           } />
         </Routes>

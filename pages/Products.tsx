@@ -1,11 +1,62 @@
 import React, { useState } from 'react';
-import { ArrowRight, Leaf, Droplets, ShoppingBag, Star, ChevronRight, Shirt } from 'lucide-react';
+import { ArrowRight, Leaf, Droplets, ShoppingBag, Star, ChevronRight, Shirt, BookOpen } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Reveal } from '../components/Reveal';
 
-interface Product {
+// ─── Shirt Data ──────────────────────────────────────────────────────────────
+interface FishPattern {
+  id: string;
+  patternThumb: string;
+  accentColor: string;
+  badgeColor: string;
+  storyPath: string;
+  nameKey: 'plakab_name' | 'plakador_name' | 'plamor_name';
+  descKey: 'plakab_desc' | 'plakador_desc' | 'plamor_desc';
+  tagKey: 'plakab_tag' | 'plakador_tag' | 'plamor_tag';
+}
+
+const fishPatterns: FishPattern[] = [
+  {
+    id: 'pla-kab',
+    patternThumb: '/images/kajub.jpg',
+    accentColor: 'from-teal-400/20 to-cyan-300/10',
+    badgeColor: 'bg-teal-100 text-teal-700',
+    storyPath: '#/fish-collection#pla-kab',
+    nameKey: 'plakab_name',
+    descKey: 'plakab_desc',
+    tagKey: 'plakab_tag',
+  },
+  {
+    id: 'pla-kador-ling',
+    patternThumb: '/images/kadoorling.jpg',
+    accentColor: 'from-indigo-400/20 to-blue-300/10',
+    badgeColor: 'bg-indigo-100 text-indigo-700',
+    storyPath: '#/fish-collection#pla-kador-ling',
+    nameKey: 'plakador_name',
+    descKey: 'plakador_desc',
+    tagKey: 'plakador_tag',
+  },
+  {
+    id: 'pla-mor',
+    patternThumb: '/images/pla-mor.jpg',
+    accentColor: 'from-amber-400/20 to-orange-300/10',
+    badgeColor: 'bg-amber-100 text-amber-700',
+    storyPath: '#/fish-collection#pla-mor',
+    nameKey: 'plamor_name',
+    descKey: 'plamor_desc',
+    tagKey: 'plamor_tag',
+  },
+];
+
+const shirtStyles = [
+  { id: 'style1', image: '/images/products/shirt1.png' },
+  { id: 'style2', image: '/images/products/shirt2.png' },
+];
+
+// ─── Natural Product Data ─────────────────────────────────────────────────────
+interface NaturalProduct {
   id: string;
   image: string;
   nameKey: keyof typeof translations['th']['products'];
@@ -13,46 +64,12 @@ interface Product {
   tagKey: keyof typeof translations['th']['products'];
   accentColor: string;
   badgeColor: string;
-  detailPath?: string; // optional link to detail page/section
 }
 
-const shirtProducts: Product[] = [
-  {
-    id: 'pla-kab',
-    image: '/images/kajub.jpg',
-    nameKey: 'plakab_name',
-    descKey: 'plakab_desc',
-    tagKey: 'plakab_tag',
-    accentColor: 'from-teal-400/20 to-cyan-300/10',
-    badgeColor: 'bg-teal-100 text-teal-700',
-    detailPath: '#/fish-collection#pla-kab',
-  },
-  {
-    id: 'pla-kador-ling',
-    image: '/images/kadoorling.jpg',
-    nameKey: 'plakador_name',
-    descKey: 'plakador_desc',
-    tagKey: 'plakador_tag',
-    accentColor: 'from-indigo-400/20 to-blue-300/10',
-    badgeColor: 'bg-indigo-100 text-indigo-700',
-    detailPath: '#/fish-collection#pla-kador-ling',
-  },
-  {
-    id: 'pla-mor',
-    image: '/images/pla-mor.jpg',
-    nameKey: 'plamor_name',
-    descKey: 'plamor_desc',
-    tagKey: 'plamor_tag',
-    accentColor: 'from-amber-400/20 to-orange-300/10',
-    badgeColor: 'bg-amber-100 text-amber-700',
-    detailPath: '#/fish-collection#pla-mor',
-  },
-];
-
-const naturalProducts: Product[] = [
+const naturalProducts: NaturalProduct[] = [
   {
     id: 'sea-salt',
-    image: '/images/products/sea_salt.png',
+    image: '/images/products/spa-salt.png',
     nameKey: 'sea_salt_name',
     descKey: 'sea_salt_desc',
     tagKey: 'sea_salt_tag',
@@ -69,13 +86,13 @@ const naturalProducts: Product[] = [
     badgeColor: 'bg-amber-100 text-amber-700',
   },
   {
-    id: 'fiber',
-    image: '/images/products/fiber.png',
-    nameKey: 'fiber_name',
-    descKey: 'fiber_desc',
-    tagKey: 'fiber_tag',
-    accentColor: 'from-emerald-400/20 to-green-300/10',
-    badgeColor: 'bg-emerald-100 text-emerald-700',
+    id: 'nampik',
+    image: '/images/products/nampik.png',
+    nameKey: 'nampik_name',
+    descKey: 'nampik_desc',
+    tagKey: 'nampik_tag',
+    accentColor: 'from-red-400/20 to-orange-300/10',
+    badgeColor: 'bg-red-100 text-red-700',
   },
   {
     id: 'coconut-soap',
@@ -95,6 +112,15 @@ const naturalProducts: Product[] = [
     accentColor: 'from-violet-400/20 to-purple-300/10',
     badgeColor: 'bg-violet-100 text-violet-700',
   },
+  {
+    id: 'dyed-silk',
+    image: '/images/products/dyed_silk.png',
+    nameKey: 'dyed_silk_name',
+    descKey: 'dyed_silk_desc',
+    tagKey: 'dyed_silk_tag',
+    accentColor: 'from-purple-400/20 to-pink-300/10',
+    badgeColor: 'bg-purple-100 text-purple-700',
+  },
 ];
 
 // ─── Category Divider ─────────────────────────────────────────────────────────
@@ -111,12 +137,114 @@ const CategoryDivider: React.FC<{ icon: React.ReactNode; label: string; delay?: 
   </Reveal>
 );
 
-// ─── Product Card ─────────────────────────────────────────────────────────────
-const ProductCard: React.FC<{
-  product: Product;
+// ─── Shirt Card (1 card, pattern × style) ────────────────────────────────────
+const ShirtCard: React.FC<{ tp: typeof translations['th']['products'] }> = ({ tp }) => {
+  const [activePattern, setActivePattern] = useState(0);
+  const [activeStyle, setActiveStyle] = useState(0);
+
+  const pattern = fishPatterns[activePattern];
+  const style = shirtStyles[activeStyle];
+
+  const handlePatternChange = (i: number) => {
+    setActivePattern(i);
+  };
+
+  return (
+    <motion.div
+      className="relative w-full max-w-sm mx-auto p-2"
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="relative rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-500">
+        <div className="relative bg-white/60 backdrop-blur-md rounded-3xl border border-white/80 overflow-hidden">
+
+          {/* Gradient glow */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${pattern.accentColor} transition-all duration-500 pointer-events-none`} />
+
+          {/* Shirt Image */}
+          <div className="relative h-72 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={`${pattern.id}-${style.id}`}
+                src={style.image}
+                alt="Handmade Shirt"
+                className="h-full w-full object-contain drop-shadow-xl"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+              />
+            </AnimatePresence>
+
+            {/* Pattern badge */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pattern.tagKey}
+                className={`absolute top-4 left-4 ${pattern.badgeColor} text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full`}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.2 }}
+              >
+                {tp[pattern.tagKey]}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Shirt badge */}
+            <div className="absolute top-4 right-4 bg-indigo-deep/10 text-indigo-deep text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full flex items-center gap-1">
+              <Shirt size={10} />
+              <span>Shirt</span>
+            </div>
+          </div>
+
+          <div className="relative px-6 pt-5 pb-5 space-y-5">
+
+            {/* Style toggle — 2 image dots, no label */}
+            <div className="flex gap-3">
+              {shirtStyles.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => setActiveStyle(i)}
+                  className={`relative w-11 h-11 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                    i === activeStyle
+                      ? 'border-indigo-deep scale-110 shadow-md'
+                      : 'border-transparent opacity-55 hover:opacity-90 hover:scale-105'
+                  }`}
+                  aria-label={`Shirt style ${i + 1}`}
+                >
+                  <img src={s.image} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+
+            {/* Name + story */}
+            <div>
+              <h3 className="font-serif text-2xl text-indigo-deep mb-1">
+                {tp.shirt_name}
+              </h3>
+
+              <a
+                href={pattern.storyPath}
+                className="mt-2 inline-flex items-center gap-2 text-sm font-sans font-semibold text-indigo-deep hover:text-mangrove transition-colors group/btn"
+              >
+                <BookOpen size={14} />
+                <span>{tp.read_story}</span>
+                <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// ─── Natural Product Card ─────────────────────────────────────────────────────
+const NaturalCard: React.FC<{
+  product: NaturalProduct;
   tp: typeof translations['th']['products'];
-  isShirt?: boolean;
-}> = ({ product, tp, isShirt }) => {
+}> = ({ product, tp }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -127,15 +255,11 @@ const ProductCard: React.FC<{
       whileHover={{ y: -6 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Shadow Container */}
       <div className="relative rounded-3xl transition-all duration-500 shadow-xl group-hover:shadow-2xl">
-        {/* Content Container */}
         <div className="relative bg-white/60 backdrop-blur-md rounded-3xl border border-white/80 overflow-hidden">
 
-          {/* Gradient glow on hover */}
           <div className={`absolute inset-0 bg-gradient-to-br ${product.accentColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-          {/* Image Area */}
           <div className="relative h-64 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6">
             <motion.img
               src={product.image}
@@ -144,20 +268,11 @@ const ProductCard: React.FC<{
               whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.4 }}
             />
-            {/* Tag badge */}
             <div className={`absolute top-4 left-4 ${product.badgeColor} text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full`}>
               {tp[product.tagKey]}
             </div>
-            {/* Shirt badge */}
-            {isShirt && (
-              <div className="absolute top-4 right-4 bg-indigo-deep/10 text-indigo-deep text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full flex items-center gap-1">
-                <Shirt size={10} />
-                <span>Shirt</span>
-              </div>
-            )}
           </div>
 
-          {/* Content */}
           <div className="relative p-6 pt-5">
             <h3 className="font-serif text-2xl text-indigo-deep mb-2 group-hover:text-indigo-900 transition-colors">
               {tp[product.nameKey]}
@@ -166,7 +281,6 @@ const ProductCard: React.FC<{
               {tp[product.descKey]}
             </p>
 
-            {/* Expand on hover */}
             <AnimatePresence>
               {active && (
                 <motion.div
@@ -176,27 +290,16 @@ const ProductCard: React.FC<{
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="pt-4 mt-4 border-t border-indigo-deep/10 flex flex-wrap gap-3">
-                    {isShirt && product.detailPath && (
-                      <a
-                        href={product.detailPath}
-                        className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-indigo-deep hover:text-mangrove transition-colors group/btn"
-                      >
-                        <span>{tp.view_details}</span>
-                        <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                      </a>
-                    )}
-                    {!isShirt && (
-                      <a
-                        href="https://line.me/R/ti/p/@891hgjgk"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-indigo-deep hover:text-mangrove transition-colors group/btn"
-                      >
-                        <span>{tp.order_line}</span>
-                        <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                      </a>
-                    )}
+                  <div className="pt-4 mt-4 border-t border-indigo-deep/10">
+                    <a
+                      href="https://line.me/R/ti/p/@891hgjgk"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-indigo-deep hover:text-mangrove transition-colors group/btn"
+                    >
+                      <span>{tp.order_line}</span>
+                      <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </a>
                   </div>
                 </motion.div>
               )}
@@ -265,20 +368,16 @@ export const Products: React.FC = () => {
         </div>
       </section>
 
-      {/* ── Fish Shirt Products ── */}
+      {/* ── Handmade Shirt — single card, 3 variants ── */}
       <section className="max-w-7xl mx-auto px-6 pb-10">
         <CategoryDivider
           icon={<Shirt size={18} />}
           label={tp.category_shirts}
           delay={0.1}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {shirtProducts.map((product, index) => (
-            <Reveal key={product.id} delay={0.1 + index * 0.08} direction="up" overflowVisible={true}>
-              <ProductCard product={product} tp={tp} isShirt />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.15} direction="up" overflowVisible>
+          <ShirtCard tp={tp} />
+        </Reveal>
       </section>
 
       {/* ── Natural Goods ── */}
@@ -291,7 +390,7 @@ export const Products: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {naturalProducts.map((product, index) => (
             <Reveal key={product.id} delay={0.1 + index * 0.08} direction="up" overflowVisible={true}>
-              <ProductCard product={product} tp={tp} />
+              <NaturalCard product={product} tp={tp} />
             </Reveal>
           ))}
         </div>

@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import html2canvas from 'html2canvas';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SizeTable } from '../components/SizeTable';
 
 // Types
 interface FishOption {
@@ -36,7 +37,7 @@ const FISH_OPTIONS: FishOption[] = [
   { id: 'mor', img: '/images/shirt/pla-mor.png', name: 'Pla Mor' },
 ];
 
-const SHIRT_SIZES = ['S', 'M', 'L', 'XL'];
+const SHIRT_SIZES = ['S', 'M', 'L', 'XL'/*, 'XXL', 'XXXL'*/];
 const MAX_ITEMS = 5;
 
 export const CustomOrder: React.FC = () => {
@@ -467,7 +468,7 @@ export const CustomOrder: React.FC = () => {
                 {t.step_3}
               </h3>
 
-              <div className="flex gap-2 mb-6">
+              <div className="flex gap-2 mb-2">
                 {SHIRT_SIZES.map((s) => (
                   <motion.button
                     key={s}
@@ -481,6 +482,11 @@ export const CustomOrder: React.FC = () => {
                     {s}
                   </motion.button>
                 ))}
+              </div>
+
+              {/* Size Guide Button */}
+              <div className="mb-4">
+                <SizeTable />
               </div>
 
               {/* Color Selection */}

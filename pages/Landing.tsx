@@ -88,6 +88,40 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
         </motion.div>
       </section>
 
+      {/* Showcase Video */}
+      <section className="py-24 px-6 md:px-12 w-full flex justify-center">
+        <div className="w-full max-w-5xl flex flex-col items-center">
+          <Reveal delay={0.2} direction="up">
+            <div className="text-center mb-12">
+              <span className="inline-block py-1 px-3 rounded-full bg-indigo-deep/5 text-indigo-deep border border-indigo-deep/10 text-xs md:text-sm font-bold tracking-[0.2em] uppercase">
+                {t.video_label}
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl text-indigo-deep mt-5 mb-4">
+                {t.video_title}
+              </h2>
+              <p className="font-sans text-gray-600 text-lg max-w-2xl mx-auto">
+                {t.video_desc}
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.35} direction="up">
+            <div className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-indigo-deep/10 bg-white shadow-2xl">
+              <div className="aspect-video w-full">
+                <iframe
+                  src="https://drive.google.com/file/d/1lfGNxufGqVcEXvTHSpElkYYALs5vqfeG/preview"
+                  title={t.video_title}
+                  width="540"
+                  height="960"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Values Grid */}
       <section className="py-24 px-6 md:px-12 relative">
         <div className="relative max-w-7xl mx-auto">

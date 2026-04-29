@@ -34,6 +34,9 @@ export const translations = {
       fb_title: 'อัปเดตล่าสุด',
       fb_desc: 'ติดตามข่าวสารและกิจกรรมล่าสุดของเราได้ที่ Facebook',
       values_title: 'คุณค่าของเรา',
+      video_label: 'วิดีโอแนะนำ',
+      video_title: 'เรื่องราวของ Tam Rudu',
+      video_desc: 'ชมวิดีโอแนะนำผลงานและเรื่องราวเบื้องหลังแบรนด์ของเรา',
     },
     plakab: {
       rhythm: 'จังหวะแห่งสายน้ำ',
@@ -203,6 +206,9 @@ export const translations = {
       fb_title: 'Latest Updates',
       fb_desc: 'Follow us on Facebook for the latest news and updates',
       values_title: 'Our Values',
+      video_label: 'Showcase Video',
+      video_title: 'Tam Rudu Story',
+      video_desc: 'Watch our showcase video and discover the story behind the brand.',
     },
     plakab: {
       rhythm: 'The Rhythm of Tides',

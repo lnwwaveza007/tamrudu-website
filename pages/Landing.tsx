@@ -109,7 +109,7 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
             <div className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-indigo-deep/10 bg-white shadow-2xl">
               <div className="aspect-video w-full">
                 <iframe
-                  src="https://drive.google.com/file/d/1lfGNxufGqVcEXvTHSpElkYYALs5vqfeG/preview"
+                  src="https://drive.google.com/file/d/1a9iKVhym5dtEdHzHcdPk3dJgsopaHgjS/preview"
                   title={t.video_title}
                   width="540"
                   height="960"

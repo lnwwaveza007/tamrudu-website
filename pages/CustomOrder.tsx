@@ -224,11 +224,13 @@ export const CustomOrder: React.FC = () => {
     return (
       <div className="relative w-full h-full">
         {/* Shirt Background */}
-        <div className={`relative w-full h-full ${side === 'back' ? 'transform scale-x-[-1]' : ''}`}>
+        <div className="relative w-full h-full">
           <img
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop"
+            src={shirtColor === 'white' 
+              ? (side === 'front' ? '/images/shirt/front-view.avif' : '/images/shirt/back-view.png')
+              : (side === 'front' ? '/images/shirt/black-front-view.png' : '/images/shirt/black-shirt-back.png')}
             alt="T-Shirt"
-            className={`w-full h-full object-contain mix-blend-multiply opacity-90 transition-all duration-300 ${shirtColor === 'black' ? 'invert grayscale brightness-75' : ''}`}
+            className="w-full h-full object-contain transition-all duration-300"
             crossOrigin="anonymous"
           />
         </div>

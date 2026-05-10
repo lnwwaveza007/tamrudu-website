@@ -1,9 +1,63 @@
 import React, { useState } from 'react';
-import { ArrowRight, Leaf, Droplets, ShoppingBag, Star, ChevronRight, Shirt, BookOpen } from 'lucide-react';
+import { ArrowRight, Leaf, Droplets, ShoppingBag, Star, ChevronRight, Shirt, BookOpen, X, ZoomIn } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Reveal } from '../components/Reveal';
+import { createPortal } from 'react-dom';
+
+// ─── Image Modal Component ───────────────────────────────────────────────────
+const ImageModal: React.FC<{ isOpen: boolean; onClose: () => void; imageSrc: string }> = ({ isOpen, onClose, imageSrc }) => {
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm cursor-zoom-out"
+          onClick={onClose}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/80 rounded-full p-2 z-[101]"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+          >
+            <X size={24} />
+          </button>
+          <motion.img
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            src={imageSrc}
+            alt="Full screen preview"
+            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+};
+
+
 
 // ─── Shirt Data ──────────────────────────────────────────────────────────────
 interface FishPattern {
@@ -141,6 +195,7 @@ const CategoryDivider: React.FC<{ icon: React.ReactNode; label: string; delay?: 
 const ShirtCard: React.FC<{ tp: typeof translations['th']['products'] }> = ({ tp }) => {
   const [activePattern, setActivePattern] = useState(0);
   const [activeStyle, setActiveStyle] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const pattern = fishPatterns[activePattern];
   const style = shirtStyles[activeStyle];
@@ -150,6 +205,8 @@ const ShirtCard: React.FC<{ tp: typeof translations['th']['products'] }> = ({ tp
   };
 
   return (
+    <>
+    <ImageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} imageSrc={style.image} />
     <motion.div
       className="relative w-full max-w-sm mx-auto p-2"
       whileHover={{ y: -6 }}
@@ -162,7 +219,13 @@ const ShirtCard: React.FC<{ tp: typeof translations['th']['products'] }> = ({ tp
           <div className={`absolute inset-0 bg-gradient-to-br ${pattern.accentColor} transition-all duration-500 pointer-events-none`} />
 
           {/* Shirt Image */}
-          <div className="relative h-72 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6">
+          <div 
+            className="relative h-72 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6 cursor-zoom-in group/img"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/5 transition-colors z-10 flex items-center justify-center pointer-events-none">
+              <ZoomIn className="text-black/0 group-hover/img:text-indigo-deep/50 w-8 h-8 transition-colors transform scale-50 group-hover/img:scale-100 duration-300" />
+            </div>
             <AnimatePresence mode="wait">
               <motion.img
                 key={`${pattern.id}-${style.id}`}
@@ -237,6 +300,7 @@ const ShirtCard: React.FC<{ tp: typeof translations['th']['products'] }> = ({ tp
         </div>
       </div>
     </motion.div>
+    </>
   );
 };
 
@@ -246,8 +310,11 @@ const NaturalCard: React.FC<{
   tp: typeof translations['th']['products'];
 }> = ({ product, tp }) => {
   const [active, setActive] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
+    <>
+    <ImageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} imageSrc={product.image} />
     <motion.div
       className="relative group cursor-pointer p-2"
       onHoverStart={() => setActive(true)}
@@ -260,7 +327,16 @@ const NaturalCard: React.FC<{
 
           <div className={`absolute inset-0 bg-gradient-to-br ${product.accentColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-          <div className="relative h-64 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6">
+          <div 
+            className="relative h-64 overflow-hidden bg-gradient-to-b from-paper/80 to-white/60 flex items-center justify-center p-6 cursor-zoom-in group/img"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsModalOpen(true);
+            }}
+          >
+            <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/5 transition-colors z-10 flex items-center justify-center pointer-events-none">
+              <ZoomIn className="text-black/0 group-hover/img:text-indigo-deep/50 w-8 h-8 transition-colors transform scale-50 group-hover/img:scale-100 duration-300" />
+            </div>
             <motion.img
               src={product.image}
               alt={tp[product.nameKey]}
@@ -308,6 +384,7 @@ const NaturalCard: React.FC<{
         </div>
       </div>
     </motion.div>
+    </>
   );
 };
 

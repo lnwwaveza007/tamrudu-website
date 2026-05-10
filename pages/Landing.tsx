@@ -218,7 +218,7 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
                 style={{ minHeight: '500px' }}
               >
                 <iframe
-                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FKMUTT&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FKaomai.Plamun.Amphawa&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
                   width="100%"
                   height="500"
                   style={{ border: 'none', overflow: 'hidden' }}
